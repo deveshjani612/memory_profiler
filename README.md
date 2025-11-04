@@ -1,6 +1,4 @@
-# memory_profiler
-“Profiling Memory Access Patterns of Linux Processes.”
-# 🧩 Real-time Memory Profiler using eBPF (Linux)
+# Real-time Memory Profiler using eBPF (Linux)
 
 ## Overview
 This tool profiles **memory usage and access patterns** of a running Linux process in real time.  
@@ -15,7 +13,7 @@ This project fulfills the goals of the *“Profiling Memory Access Patterns of L
 
 ---
 
-## ✨ Features
+##  Features
 
 | Function | Description |
 |-----------|--------------|
@@ -27,5 +25,26 @@ This project fulfills the goals of the *“Profiling Memory Access Patterns of L
 
 ---
 
-## 📁 Repository Structure
+##  How to implement
+ Building and Running
+1. Build the test workload
+gcc alloc_test.c -o alloc_test
+
+2. Run the target process
+./alloc_test &
+echo $!   # save its PID
+
+3. Start the tracer
+sudo ./memtrace_tp.py --pid <PID>
+
+
+Example output:
+
+[12:14:03] pid=12058 mmap   addr=0x0 len=409600 pfn=N/A
+[12:14:03] pid=12058 fault  addr=0x7f1e7c800000 len=4096 pfn=0x19c57
+[12:14:04] pid=12058 munmap addr=0x7f1e7c800000 len=409600 pfn=N/A
+
+
+Press Ctrl + C to stop tracing.
+A CSV file memtrace_log.csv will be created.
 
